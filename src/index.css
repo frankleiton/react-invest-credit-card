@@ -27,7 +27,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  width: 100%;
   min-height: 100vh;
   background-color: #032030;
 }
@@ -50,7 +50,7 @@ button {
   width: 100%;
 }
 button:hover {
-  transition: .2s all ease-in-out;
+  transition: 0.2s all ease-in-out;
   background-color: #006da4;
 }
 button:focus,
