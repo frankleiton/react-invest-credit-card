@@ -5,6 +5,7 @@ const InvestmentCalculator = () => {
   const [months, setMonths] = useState("");
   const [interestRate, setInterestRate] = useState("");
   const [result, setResult] = useState("");
+  const [resultAlt, setResultAlt] = useState("");
 
   const calculateInvestment = () => {
     const principal = parseFloat(totalValue);
@@ -12,8 +13,22 @@ const InvestmentCalculator = () => {
     const r = parseFloat(interestRate) / 100;
 
     const amount = principal * Math.pow(1 + r, n);
-    setResult(amount.toFixed(2));
+    setResult((amount - principal).toFixed(2));
+    calculateInvestAlt();
   };
+
+  const calculateInvestAlt = () => {
+    const principal = parseFloat(totalValue)
+    const n = parseFloat(months);
+    const r = parseFloat(interestRate) / 100;
+
+    let amount = principal;
+    for (let i = 0; i < n; i++) {
+      amount -= amount * r
+    }
+
+    setResultAlt((principal - amount).toFixed(2))
+  }
 
   const clearValues = () => {
     setTotalValue("");
@@ -25,7 +40,8 @@ const InvestmentCalculator = () => {
   return (
     <div className="container">
       <div className="flex card radius">
-        <h2>Calculadora de investimentos (Vale a pena pagar a vista ?)</h2>
+        <h2 style={{marginBottom: '0px'}}>Calculadora de investimentos (Vale a pena pagar a vista ?)</h2>
+        <p style={{marginTop: '0px'}}>Uso inteligente do cartão de credito</p>
         <div className="form-container">
           <label>Valor da compra:</label>
           <input
@@ -44,7 +60,7 @@ const InvestmentCalculator = () => {
         </div>
         <div className="form-container">
           <label>
-            Porcentagem de possivel rendimento (CDI, LCA, LCI, FIIS...):
+            Porcentagem de possivel rendimento mensal (CDI, LCA, LCI, FIIS...):
           </label>
           <input
             type="number"
@@ -61,6 +77,13 @@ const InvestmentCalculator = () => {
           <p>
             Após {months} meses, o seu investimento irá gerar aproximadamente um
             retorno de: <strong>R$ {result}</strong>
+          </p>
+        )}
+
+        {resultAlt && (
+          <p>
+            Após {months} meses, o seu investimento irá gerar aproximadamente um
+            retorno de: <strong>R$ {resultAlt}</strong>
           </p>
         )}
       </div>
